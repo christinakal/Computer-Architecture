@@ -7,7 +7,10 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-       passs
+        self.ram = [0] * 256
+        self.pc = 0
+        self.reg = [0] * 8
+        self.HLT = 0b00000001
 
     def load(self):
         """Load a program into memory."""
@@ -40,6 +43,15 @@ class CPU:
         else:
             raise Exception("Unsupported ALU operation")
 
+    # ADD READ AND WRITE FUNCTIONS
+ 
+    def ram_read(self, address=None):
+        v = self.ram[address]
+        return v
+    
+    def ram_write(self, value=None, address=None):
+        self.ram[address] = value
+
     def trace(self):
         """
         Handy function to print out the CPU state. You might want to call this
@@ -60,6 +72,27 @@ class CPU:
 
         print()
 
+    # IMPLEMENT THIS -->
     def run(self):
         """Run the CPU."""
-        pass
+        running = True
+        
+        while running:
+            # IR -> Instruction Register, stores the memory address
+            IR = self.ram_read(self.pc)
+            # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into variables operand_a and operand_b in case the instruction needs them.
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
+
+            if IR == 0b10000010:  # LDI instruction -> where did we find this?
+                self.reg[operand_a] = operand_b
+                self.pc += 3
+            elif IR == 0b01000111:  # PRN instruction
+                print(self.reg[operand_a])
+                self.pc += 2
+            elif IR == self.HLT:
+                running = False
+            else:
+                print(f"Unknown instruction {IR}")
+
+
