@@ -18,6 +18,7 @@ CPU ->  brain of the computer, executes instructions
                     clock cycle rate is measured in Hz or GHz
                     each instuction takes 1 cycle or more to execute
                     the faster the clock the more instructions can execute per second
+                    When they say your CPU is 3.2 GHz, this is what they are referencing. It’s the number of times per second the CPU does some processing.
         ALU ->it does the arithmetic operations
         what makes CPU faster-> duplkicate hardware components
                                 multi-core CPUs
@@ -27,19 +28,19 @@ CPU ->  brain of the computer, executes instructions
 
 
 
-RAM -> Stands for Random Access Memory
-    It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
-    Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
-    Bytes of data are stored in RAM
+RAM ->  Stands for Random Access Memory
+        It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
+        Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
+        Bytes of data are stored in RAM
 
-    Larger 64bit (8-byte) numbers, stored sequentially in RAM, that the CPU can operate on at once are called words -> the exact number of bytes per word depends on the architecture
-    - 8 bytes for a 64-bit CPU
-    - 4 bytes for a 32-bit CPU
-    - 1 byte fot a 8-bit CPU
+        Larger 64bit (8-byte) numbers, stored sequentially in RAM, that the CPU can operate on at once are called words -> the exact number of bytes per word depends on the architecture
+        - 8 bytes for a 64-bit CPU
+        - 4 bytes for a 32-bit CPU
+        - 1 byte fot a 8-bit CPU
 
-    for example: if a CPU has to do a math operation, to add 2 numbers together. It is able to add 2 64-bit numbers at once if it is a 64-bit computer 
+        for example: if a CPU has to do a math operation, to add 2 numbers together. It is able to add 2 64-bit numbers at once if it is a 64-bit computer 
 
-    caching: it's slow to take data from RAM but access to registers is faster
+        caching: it's slow to take data from RAM but access to registers is faster
 
 
 CHALLENGE:
