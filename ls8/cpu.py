@@ -84,7 +84,7 @@ class CPU:
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
 
-            if IR == 0b10000010:  # LDI instruction -> where did we find this?
+            if IR == 0b10000010:  # LDI instruction --> I have a question here!
                 self.reg[operand_a] = operand_b
                 self.pc += 3
             elif IR == 0b01000111:  # PRN instruction
