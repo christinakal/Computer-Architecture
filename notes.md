@@ -3,33 +3,6 @@ Gates - made from transistors - understands boolean logic
 Digital logic
 Gates can be put together into more complex structures like ... CPUs
 
-<<<<<<< HEAD
-CPU ->  brain of the computer, executes instructions
-        Registers -> they can store words that can be acessed in ultra high speed because it's inside the cpu unlike RAM which is farthest 
-        Think of them as variables
-        Stored directly on the cpu
-        CPU keeps track of the address of the currently executing instruction in RAM and performs different actions based on the unstruction found there
-        The address of the currently-executing instruction is held in a special register called the program counter PC
-        CPUs usually have a significant amount of instructions, usually aroung 50-200
-        CPU Clock ->in a modern cpu triggers a few billion times per second
-                    clock cycle rate is measured in Hz or GHz
-                    each instuction takes 1 cycle or more to execute
-                    the faster the clock the more instructions can execute per second
-                    When they say your CPU is 3.2 GHz, this is what they are referencing. It’s the number of times per second the CPU does some processing.
-        ALU ->it does the arithmetic operations
-        what makes CPU faster-> duplkicate hardware components
-                                multi-core CPUs
-                                pipelining
-                                timesharing
-        System Bus ->   how the data is passed from CPU to RAM and from CPU to the peripherals
-
-
-
-RAM ->  Stands for Random Access Memory
-        It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
-        Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
-        Bytes of data are stored in RAM
-=======
 CPU -> brain of the computer, executes instructions
 Registers -> they can store words that can be acessed in ultra high speed because it's inside the cpu unlike RAM which is farthest
 Think of them as variables
@@ -52,18 +25,13 @@ RAM -> Stands for Random Access Memory
 It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
 Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
 Bytes of data are stored in RAM
->>>>>>> 24d2d97135c4e3a53dc38346d421e188bfb4c5d2
 
         Larger 64bit (8-byte) numbers, stored sequentially in RAM, that the CPU can operate on at once are called words -> the exact number of bytes per word depends on the architecture
         - 8 bytes for a 64-bit CPU
         - 4 bytes for a 32-bit CPU
         - 1 byte fot a 8-bit CPU
 
-<<<<<<< HEAD
-        for example: if a CPU has to do a math operation, to add 2 numbers together. It is able to add 2 64-bit numbers at once if it is a 64-bit computer 
-=======
     for example: if a CPU has to do a math operation, to add 2 numbers together. It is able to add 2 64-bit numbers at once if it is a 64-bit computer
->>>>>>> 24d2d97135c4e3a53dc38346d421e188bfb4c5d2
 
         caching: it's slow to take data from RAM but access to registers is faster
 
