@@ -7,27 +7,7 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        # RAM
-        self.ram = [0] * 256
-
-        # general-purpose registers
-        self.registers = [0] * 8
-        self.registers[7] = 0xF4    # stack pointer
-        self.sp = self.registers[7] # alias for stack pointer
-
-        # internal registers
-        self.pc = 0   # program counter
-        self.ir = None   # instruction register
-        self.mar = None  # memory address register
-        self.mdr = None  # memory data register
-        self.fl = 0   # flags
-
-        # keep track of whether program is running
-        # HALT will set this variable to false
-        self.is_running = True
-
-        # keep track of whether an interrupt is occuring
-        self.is_interrupted = False
+       passs
 
     def load(self):
         """Load a program into memory."""
