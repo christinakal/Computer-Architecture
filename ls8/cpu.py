@@ -8,9 +8,8 @@ class CPU:
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
-        self.pc = 0
-        self.reg = [0] * 8
-        self.HLT = 0b00000001
+        self.pc = 0  # program counter
+        self.reg = [0] * 8 # multiply by how many registers
 
     def load(self):
         """Load a program into memory."""
@@ -43,11 +42,11 @@ class CPU:
         else:
             raise Exception("Unsupported ALU operation")
 
-    # ADD READ AND WRITE FUNCTIONS
+    # ADD ram_read AND ram_write FUNCTIONS
  
     def ram_read(self, address=None):
-        v = self.ram[address]
-        return v
+        value = self.ram[address]
+        return value
     
     def ram_write(self, value=None, address=None):
         self.ram[address] = value
@@ -79,20 +78,20 @@ class CPU:
         
         while running:
             # IR -> Instruction Register, stores the memory address
-            IR = self.ram_read(self.pc)
+            instruction = self.ram_read(self.pc)
             # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into variables operand_a and operand_b in case the instruction needs them.
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
 
-            if IR == 0b10000010:  # LDI instruction --> I have a question here!
+            if instruction == 0b10000010:  # from LDI instruction
                 self.reg[operand_a] = operand_b
                 self.pc += 3
-            elif IR == 0b01000111:  # PRN instruction
+            elif instruction == 0b01000111:  # from PRN instruction
                 print(self.reg[operand_a])
                 self.pc += 2
-            elif IR == self.HLT:
+            elif instruction == 0b00000001: # HALT (HLT)
                 running = False
             else:
-                print(f"Unknown instruction {IR}")
+                print(f"Unknown instruction {instruction}")
 
 

@@ -3,28 +3,28 @@ Gates - made from transistors - understands boolean logic
 Digital logic
 Gates can be put together into more complex structures like ... CPUs
 
-CPU -> brain of the computer, executes instructions
-Registers -> they can store words that can be acessed in ultra high speed because it's inside the cpu unlike RAM which is farthest
-Think of them as variables
-Stored directly on the cpu
-CPU keeps track of the address of the currently executing instruction in RAM and performs different actions based on the unstruction found there
-The address of the currently-executing instruction is held in a special register called the program counter PC
-CPUs usually have a significant amount of instructions, usually aroung 50-200
+CPU ->  brain of the computer, executes instructions
+        Registers -> they can store words that can be acessed in ultra high speed because it's inside the cpu unlike RAM which is farthest
+        Think of them as variables
+        Stored directly on the cpu
+        CPU keeps track of the address of the currently executing instruction in RAM and performs different actions based on the unstruction found there
+        The address of the currently-executing instruction is held in a special register called the program counter PC
+        CPUs usually have a significant amount of instructions, usually aroung 50-200
 CPU Clock ->in a modern cpu triggers a few billion times per second
-clock cycle rate is measured in Hz or GHz
-each instuction takes 1 cycle or more to execute
-the faster the clock the more instructions can execute per second
+            clock cycle rate is measured in Hz or GHz
+            each instuction takes 1 cycle or more to execute
+            the faster the clock the more instructions can execute per second
 ALU ->it does the arithmetic operations
-what makes CPU faster-> duplkicate hardware components
-multi-core CPUs
-pipelining
-timesharing
+        what makes CPU faster-> duplkicate hardware components
+        multi-core CPUs
+        pipelining
+        timesharing
 System Bus -> how the data is passed from CPU to RAM and from CPU to the peripherals
 
 RAM -> Stands for Random Access Memory
-It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
-Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
-Bytes of data are stored in RAM
+        It's fast compared to hard drives and SSDs - Big array of bytes that you can access by index
+        Each element in RAM can store one byte, an 8-bit number, larger muti-byte values are stored in a sequencial address in RAM
+        Bytes of data are stored in RAM
 
         Larger 64bit (8-byte) numbers, stored sequentially in RAM, that the CPU can operate on at once are called words -> the exact number of bytes per word depends on the architecture
         - 8 bytes for a 64-bit CPU
