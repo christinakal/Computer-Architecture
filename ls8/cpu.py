@@ -1,6 +1,8 @@
 """CPU functionality."""
 
 import sys
+# print(sys.argv)
+# sys.exit(0)
 
 class CPU:
     """Main CPU class."""
@@ -8,45 +10,53 @@ class CPU:
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
-        self.pc = 0  # program counter
-        self.reg = [0] * 8 # multiply by how many registers
+        self.pc = 0
+        self.reg = [0] * 8
+        self.flag = 0
+        self.LDI = 0b10000010
+        self.PRN = 0b01000111
+        self.HLT = 0b00000001
+        self.MUL = 0b10100010
+        self.address = 0
 
-    def load(self, filename):
+    def load(self, path):
         """Load a program into memory."""
 
-        address = 0
+        with open(path) as f:
+            for line in f:
+            # try:              
+                line = line.strip().split("#",1)[0]
+                if line == '':
+                    continue
+                line = int(line, 2)
+                self.ram[self.address] = line
+                self.address += 1
+                # print(line)
+                if len(sys.argv) != 2:
+                    print("usage: ls8.py filename")
+                    sys.exit(1)
+                if ValueError:
+                    pass
+            # except ValueError:
+            #     pass
 
-        # Check if we have arguments
-        if len(sys.argv) < 2:
-            print("Please enter the file path of a program to run.")
+        # address = 0
 
-        try:
-            address = 0
+        # For now, we've just hardcoded a program:
 
-            with open(filename) as f:
-                for line in f:
-                    comment_split = line.split('#')
-
-                    num = comment_split[0].strip()
-
-                    if num == '':
-                        continue # ignore blank lines
-                    
-                    
-                    val = int(num, 2)
-
-                    # store value in memory
-                    self.ram[address] = val
-                    address += 1
-
-        except FileNotFoundError:
-            print(f"{sys.argv[0]}: {sys.argv[1]} not found!")
-            sys.exit(2) # what this means?
+        # program = [
+        #     # From print8.ls8
+        #     0b10000010, # LDI R0,8
+        #     0b00000000,
+        #     0b00001000,
+        #     0b01000111, # PRN R0
+        #     0b00000000,
+        #     0b00000001, # HLT
+        # ]
 
         # for instruction in program:
         #     self.ram[address] = instruction
         #     address += 1
-
 
 
     def alu(self, op, reg_a, reg_b):
@@ -54,18 +64,21 @@ class CPU:
 
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
+        elif op == self.MUL:
+            self.reg[reg_a] *= self.reg[reg_b]
         #elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
-    # ADD ram_read AND ram_write FUNCTIONS
- 
+
+
     def ram_read(self, address=None):
-        value = self.ram[address]
-        return value
-    
+        v = self.ram[address]
+        return v
+
     def ram_write(self, value=None, address=None):
         self.ram[address] = value
+        
 
     def trace(self):
         """
@@ -73,40 +86,43 @@ class CPU:
         from run() if you need help debugging.
         """
 
-        print(f"TRACE: %02X | %02X %02X %02X |" % (
-            self.pc,
-            #self.fl,
-            #self.ie,
-            self.ram_read(self.pc),
-            self.ram_read(self.pc + 1),
-            self.ram_read(self.pc + 2)
-        ), end='')
+        # print(f"TRACE: %02X | %02X %02X %02X |" % (
+        #     self.pc,
+        #     #self.fl,
+        #     #self.ie,
+        #     self.ram_read(self.pc),
+        #     self.ram_read(self.pc + 1),
+        #     self.ram_read(self.pc + 2)
+        # ), end='')
 
-        for i in range(8):
-            print(" %02X" % self.reg[i], end='')
+        # for i in range(8):
+        #     print(" %02X" % self.reg[i], end='')
 
-        print()
+        # print()    
 
-    # IMPLEMENT THIS -->
     def run(self):
         """Run the CPU."""
-        running = False
-        
-        while running != False:
-            # IR -> Instruction Register, stores the memory address
-            instruction = self.ram_read(self.pc)
-            # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into variables operand_a and operand_b in case the instruction needs them.
+        self.trace()
+        running = True
+        while running:
+            IR = self.ram_read(self.pc)
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
 
-            if instruction == 0b10000010:  # from LDI instruction
+            if IR == self.LDI:
                 self.reg[operand_a] = operand_b
                 self.pc += 3
-            elif instruction == 0b01000111:  # from PRN instruction
+            elif IR == self.PRN:
                 print(self.reg[operand_a])
                 self.pc += 2
-            elif instruction == 0b00000001: # HALT (HLT)
+                self.trace()
+            elif IR == self.HLT:
                 running = False
-
-
-
+            elif IR == self.MUL:
+                # self.reg[operand_a] *= self.reg[operand_b]
+                self.alu(IR, operand_a, operand_b)
+                self.pc += 3
+                self.trace()            
+            else:
+                print(f"Unknown instruction {IR}")
+                running = False   
