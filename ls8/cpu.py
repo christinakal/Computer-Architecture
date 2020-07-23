@@ -11,28 +11,42 @@ class CPU:
         self.pc = 0  # program counter
         self.reg = [0] * 8 # multiply by how many registers
 
-    def load(self):
+    def load(self, filename):
         """Load a program into memory."""
 
         address = 0
 
-        program = []
+        # Check if we have arguments
+        if len(sys.argv) < 2:
+            print("Please enter the file path of a program to run.")
+
         try:
-            with open(sys.argv[1]) as f:
+            address = 0
+
+            with open(filename) as f:
                 for line in f:
-                    program.append(line)
-            print(1) # is this like print(true)?
+                    comment_split = line.split('#')
+
+                    num = comment_split[0].strip()
+
+                    if num == '':
+                        continue # ignore blank lines
+                    
+                    
+                    val = int(num, 2)
+
+                    # store value in memory
+                    self.ram[address] = val
+                    address += 1
 
         except FileNotFoundError:
             print(f"{sys.argv[0]}: {sys.argv[1]} not found!")
             sys.exit(2) # what this means?
 
-        if program is None:
-            print("No program specified!")
-            return
-        for instruction in program:
-            self.ram[address] = instruction
-            address += 1
+        # for instruction in program:
+        #     self.ram[address] = instruction
+        #     address += 1
+
 
 
     def alu(self, op, reg_a, reg_b):
@@ -76,9 +90,9 @@ class CPU:
     # IMPLEMENT THIS -->
     def run(self):
         """Run the CPU."""
-        running = True
+        running = False
         
-        while running:
+        while running != False:
             # IR -> Instruction Register, stores the memory address
             instruction = self.ram_read(self.pc)
             # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into variables operand_a and operand_b in case the instruction needs them.
