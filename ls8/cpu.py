@@ -11,12 +11,15 @@ class CPU:
         """Construct a new CPU."""
         self.ram = [0] * 256
         self.pc = 0
+        self.sp = 7 # 7 because it's a fixed number.
         self.reg = [0] * 8
         self.flag = 0
         self.LDI = 0b10000010
         self.PRN = 0b01000111
         self.HLT = 0b00000001
         self.MUL = 0b10100010
+        self.PUSH = 0b01000101
+        self.POP = 0b01000110
         self.address = 0
 
     def load(self, path):
@@ -66,7 +69,6 @@ class CPU:
             self.reg[reg_a] += self.reg[reg_b]
         elif op == self.MUL:
             self.reg[reg_a] *= self.reg[reg_b]
-        #elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -122,7 +124,34 @@ class CPU:
                 # self.reg[operand_a] *= self.reg[operand_b]
                 self.alu(IR, operand_a, operand_b)
                 self.pc += 3
-                self.trace()            
+                self.trace() 
+            elif IR == self.PUSH:
+                # decrement stack pointer
+                self.reg[self.sp] -= 1
+
+                # keep R7 in the range 00-FF
+                self.reg[self.sp] &= 0xff
+
+                # get register value
+                reg_num = self.ram[self.pc + 1]
+                value = self.reg[reg_num]
+
+                # Store in memory
+                address_to_push_to = self.reg[self.sp]
+                self.ram[address_to_push_to] = value
+                self.pc += 2
+            elif IR == self.POP:
+                # Get value from RAM
+                address_to_pop_from = self.reg[self.sp]
+                value = self.ram[address_to_pop_from]
+
+                # Store in the given register
+                reg_num = self.ram[self.pc + 1]
+                self.reg[reg_num] = value
+
+                # Increment SP
+                self.reg[self.sp] += 1
+                self.pc += 2           
             else:
                 print(f"Unknown instruction {IR}")
                 running = False   
