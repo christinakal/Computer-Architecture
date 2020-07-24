@@ -14,13 +14,16 @@ class CPU:
         self.sp = 7 # 7 because it's a fixed number.
         self.reg = [0] * 8
         self.flag = 0
+        self.address = 0
         self.LDI = 0b10000010
         self.PRN = 0b01000111
         self.HLT = 0b00000001
         self.MUL = 0b10100010
         self.PUSH = 0b01000101
         self.POP = 0b01000110
-        self.address = 0
+        self.CALL = 0b01010000
+        self.RET = 0b00010001 
+        
 
     def load(self, path):
         """Load a program into memory."""
@@ -151,7 +154,29 @@ class CPU:
 
                 # Increment SP
                 self.reg[self.sp] += 1
-                self.pc += 2           
+                self.pc += 2 
+            elif IR == self.CALL:
+                # Get address of the next instruction
+                return_addr = self.pc + 2
+
+                # Push that on the stack
+                self.reg[self.sp] -= 1
+                address_to_push_to = self.reg[self.sp]
+                self.ram[address_to_push_to] = return_addr
+
+                # Set the PC to the subroutine address
+                reg_num = self.ram[self.pc + 1]
+                subroutine_addr = self.reg[reg_num]
+
+                self.pc = subroutine_addr
+            elif IR == self.RET:
+                # Get return address from the top of the stack
+                address_to_pop_from = self.reg[self.sp]
+                return_addr = self.ram[address_to_pop_from]
+                self.reg[self.sp] += 1
+
+                # Set the PC to the return address
+                self.pc = return_addr                  
             else:
                 print(f"Unknown instruction {IR}")
                 running = False   
